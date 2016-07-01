@@ -32,6 +32,9 @@ public class SolicitudDeAdjudicacion {
     }
 
     public void agregarPago(ComprobanteDePago comprobanteDePago){
+        if (planDeAhorro.getCantidadDeCuotas() <= pagosEmitidos.size()){
+            throw new RuntimeException("No quedan cuotas a pagar");
+        }
         pagosEmitidos.add(comprobanteDePago);
     }
 

@@ -20,6 +20,7 @@ public class ClienteTest {
     public void setUp() {
         cliente = new Cliente("cliente 1", "Sasfrasdk", 3383888, new DateTime("1909-03-03"), "Capital","carldsffffrappa@gmail.com", new DateTime("2014-05-01"));
         planDeAhorro = mock(PlanDeAhorro.class);
+        when(planDeAhorro.getCantidadDeCuotas()).thenReturn(5);
     }
 
     @Test

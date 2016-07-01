@@ -19,6 +19,10 @@ public class PlanDeAhorro {
         this.cantidadDeCuotas = cantidadDeCuotas;
     }
 
+    public int getCantidadDeCuotas() {
+        return cantidadDeCuotas;
+    }
+
     public List<Cliente> getSuscriptosPlan() {
         return suscriptosPlan;
     }

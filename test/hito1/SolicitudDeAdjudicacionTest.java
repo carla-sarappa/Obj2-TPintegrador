@@ -29,6 +29,7 @@ public class SolicitudDeAdjudicacionTest {
         comprobanteDePago3 = mock(ComprobanteDePago.class);
 
         planDeAhorro = mock(PlanDeAhorro.class);
+        when(planDeAhorro.getCantidadDeCuotas()).thenReturn(4);
         solicitudDeAdjudicacion = new SolicitudDeAdjudicacion(planDeAhorro, new DateTime("2016-06-30"));
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago1);
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago2);
@@ -68,6 +69,12 @@ public class SolicitudDeAdjudicacionTest {
         ComprobanteDePago comprobanteDePago = mock(ComprobanteDePago.class);
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago);
         assertThat(solicitudDeAdjudicacion.getPagosEmitidos(), hasItems(comprobanteDePago));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAgregarPago_DebeLanzarExcepcionSiNoQuedanCuotasAPagar(){
+        solicitudDeAdjudicacion.agregarPago(mock(ComprobanteDePago.class));
+        solicitudDeAdjudicacion.agregarPago(mock(ComprobanteDePago.class));
     }
 
     @Test
