@@ -39,7 +39,12 @@ public class PlanDeAhorro {
         return formaAdjudicacion;
     }
 
-    public double getAlicuota() {
+    public Double getAlicuota() {
         return financiamiento.montoAPagarEnCuotas(modeloAuto) / cantidadDeCuotas;
+    }
+
+    public Cliente clienteAAdjudicar() {
+        return formaAdjudicacion.siguienteClienteAAdjudicar(suscriptosPlan).get();
+
     }
 }

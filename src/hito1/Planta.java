@@ -15,7 +15,7 @@ public class Planta {
         return stock.disponibles();
     }
 
-    public void agregarModelo(ModeloAuto modeloAuto, Integer cantidad) {
+    public void agregarOAumentarModelo(ModeloAuto modeloAuto, Integer cantidad) {
         stock.aumentar(modeloAuto, cantidad);
     }
 

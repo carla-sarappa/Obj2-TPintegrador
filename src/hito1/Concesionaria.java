@@ -7,6 +7,7 @@ public class Concesionaria {
     private Fabrica fabrica;
     private Map<Planta, Double> distancias = new HashMap<>();
     private List<PlanDeAhorro> planesDeAhorro = new ArrayList<>();
+    private List<CuponDeAdjudicacion> cuponesDeAdjudicacion = new ArrayList<>();
 
     public Concesionaria(Fabrica fabrica) {
         this.fabrica = fabrica;
@@ -46,5 +47,28 @@ public class Concesionaria {
 
     public void setPlanesDeAhorro(List<PlanDeAhorro> planesDeAhorro) {
         this.planesDeAhorro = planesDeAhorro;
+    }
+
+    public void ejecutarAdjudicaciones(){
+        for (PlanDeAhorro plan : planesDeAhorro){
+            ejecutarAdjudicacionYGenerarCupon(plan);
+        }
+    }
+
+    public void ejecutarAdjudicacionYGenerarCupon(PlanDeAhorro plan){
+        Cliente cliente = ejecutarAdjudicacion(plan);
+        ModeloAuto modeloAuto = cliente.getSolicitudDeAdjudicacion().getPlanDeAhorro().getModeloAuto();
+        Planta plantaMasCercana = plantaMasCercanaConModeloDisponible(modeloAuto).get();
+        CuponDeAdjudicacion cupon = new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana), plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto));
+        this.cuponesDeAdjudicacion.add(cupon);
+    }
+
+    public Cliente ejecutarAdjudicacion(PlanDeAhorro plan){
+        return plan.clienteAAdjudicar();
+
+    }
+
+    public int cantidadDisponibleDe(ModeloAuto modelo){
+        return fabrica.stockTotal(modelo);
     }
 }

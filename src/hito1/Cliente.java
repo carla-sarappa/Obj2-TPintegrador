@@ -53,8 +53,13 @@ public class Cliente {
     public SolicitudDeAdjudicacion getSolicitudDeAdjudicacion() {
         return solicitudDeAdjudicacion;
     }
+
     public void setSolicitudDeAdjudicacion(SolicitudDeAdjudicacion solicitudDeAdjudicacion) {
         this.solicitudDeAdjudicacion = solicitudDeAdjudicacion;
+    }
+
+    public void pagarCuota(){
+        solicitudDeAdjudicacion.agregarPago(new ComprobanteDePago(solicitudDeAdjudicacion, DateTime.now(), ComprobanteDePago.COSTO_GASTOS_ADMINISTRATIVOS, this));
     }
 }
 

@@ -26,4 +26,20 @@ public class SolicitudDeAdjudicacion {
     public DateTime getFechaIngresoPlan() {
         return fechaIngresoPlan;
     }
+
+    public List<ComprobanteDePago> getPagosEmitidos() {
+        return pagosEmitidos;
+    }
+
+    public void agregarPago(ComprobanteDePago comprobanteDePago){
+        pagosEmitidos.add(comprobanteDePago);
+    }
+
+    public PlanDeAhorro getPlanDeAhorro() {
+        return planDeAhorro;
+    }
+
+    public Double getValorDeVenta(){
+        return planDeAhorro.getModeloAuto().getValorDeVenta();
+    }
 }

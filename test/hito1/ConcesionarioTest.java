@@ -1,10 +1,10 @@
 package hito1;
 
 import fixture.FixturePlanesDeAhorro;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 public class ConcesionarioTest {
@@ -44,23 +44,23 @@ public class ConcesionarioTest {
 
     @Test
     public void testPlantaTieneUnConjuntoDeModelosDeAutos(){
-        planta.agregarModelo(modeloAuto, 1);
+        planta.agregarOAumentarModelo(modeloAuto, 1);
         assertFalse(planta.getModelos().isEmpty());
     }
 
     @Test
     public void testUnaFabricaSabeDecirConQueModelosTrabaja(){
         fabrica.agregarPlanta(planta);
-        planta.agregarModelo(modeloAuto, 1);
+        planta.agregarOAumentarModelo(modeloAuto, 1);
         assertFalse(fabrica.getModelosDisponibles().isEmpty());
     }
 
     @Test
     public void testLosModelosDeLaPlantaSonUnSubconjuntoDeLaFabrica(){
         fabrica.agregarPlanta(planta1);
-        planta1.agregarModelo(modelo1, 1);
+        planta1.agregarOAumentarModelo(modelo1, 1);
         fabrica.agregarPlanta(planta2);
-        planta2.agregarModelo(modelo2, 2);
+        planta2.agregarOAumentarModelo(modelo2, 2);
 
         assertTrue(fabrica.getModelosDisponibles().containsAll(fabrica.getPlantas().get(0).getModelos()));
     }
@@ -68,7 +68,7 @@ public class ConcesionarioTest {
     @Test
     public void testDadaUnaFabricaYUnModelo_LePidoElStock(){
         fabrica.agregarPlanta(planta1);
-        planta1.agregarModelo(modelo1, 5);
+        planta1.agregarOAumentarModelo(modelo1, 5);
 
         assertEquals(5, fabrica.stockTotal(modelo1));
     }
@@ -85,9 +85,9 @@ public class ConcesionarioTest {
         fabrica.agregarPlanta(planta1);
         fabrica.agregarPlanta(planta2);
         fabrica.agregarPlanta(planta);
-        planta1.agregarModelo(modelo1, 2);
-        planta2.agregarModelo(modelo2, 1);
-        planta.agregarModelo(modelo1, 3);
+        planta1.agregarOAumentarModelo(modelo1, 2);
+        planta2.agregarOAumentarModelo(modelo2, 1);
+        planta.agregarOAumentarModelo(modelo1, 3);
         concesionario.registrarDistancia(planta1, 20.0);
         concesionario.registrarDistancia(planta2, 10.0);
         concesionario.registrarDistancia(planta, 30.0);
@@ -104,13 +104,28 @@ public class ConcesionarioTest {
         assertTrue(fixture.concesionaria.planesConMayorCantidadDeSuscriptos(10).containsAll(fixture.planesDeAhorroConMayorCantidadDeSuscriptores));
     }
 
+
     @Test
-    public void testConcesionariaEjecutaLasAdjudicaciones(){
+    public void  testConcesionariaAseguraQueSuInformacionLocalDeStockDeModelosCoincideConLosDeLasPlantas(){
+        planta1.agregarOAumentarModelo(modeloAuto, 2);
+        planta2.agregarOAumentarModelo(modeloAuto, 3);
+        fabrica.agregarPlanta(planta1);
+        fabrica.agregarPlanta(planta2);
+
+        assertThat(concesionario.cantidadDisponibleDe(modeloAuto),equalTo(5));
+
+        planta1.agregarOAumentarModelo(modeloAuto, 1);
+
+        assertThat(concesionario.cantidadDisponibleDe(modeloAuto),equalTo(6));
+    }
+
+    @Test
+    public void testConcesionariaEfectuaPagosDeCuotas(){
 
     }
 
     @Test
-    public void  testConcesionariaAseguraQueSuInformacionLocalDeStockDeModelosCoincideConLosDeLasPlantas(){
+    public void testConcesionariaRegistraCuponesDeAdjudicacion(){
 
     }
 
