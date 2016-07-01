@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.mockito.Mockito.mock;
+
 public class FixturePlanesDeAhorro {
     public final List<PlanDeAhorro> planesDeAhorroConMayorCantidadDeSuscriptores = new ArrayList<>();
     public final Concesionaria concesionaria = new Concesionaria(new Fabrica());
@@ -45,7 +47,7 @@ public class FixturePlanesDeAhorro {
     }
 
     public PlanDeAhorro nuevoPlanDeAhorro(Integer ID, Integer cantidadSuscriptores){
-        PlanDeAhorro planDeAhorro = new PlanDeAhorro(ID, new ModeloAuto(), new Financiamiento100(), new FormaAdjudicacionDummy(), 9);
+        PlanDeAhorro planDeAhorro = new PlanDeAhorro(ID, mock(ModeloAuto.class), new Financiamiento100(), new FormaAdjudicacionDummy(), 9);
         planDeAhorro.getSuscriptosPlan().addAll(nuevosClientes(cantidadSuscriptores));
         return planDeAhorro;
     }

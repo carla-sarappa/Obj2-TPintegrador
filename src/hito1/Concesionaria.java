@@ -27,11 +27,11 @@ public class Concesionaria {
 
     public List<PlanDeAhorro> planesConMayorCantidadDeSuscriptos(Integer cantidadPlanes) {
         return planesDeAhorro.stream()
-            .sorted((plan1, plan2) -> { // se compara al reves para que quede de mayor a menor
-                return (plan2.getSuscriptosPlan().size() - plan1.getSuscriptosPlan().size());
-            })
-            .limit(cantidadPlanes)
-            .collect(Collectors.toList());
+                .sorted((plan1, plan2) -> { // se compara al reves para que quede de mayor a menor
+                    return (plan2.getSuscriptosPlan().size() - plan1.getSuscriptosPlan().size());
+                })
+                .limit(cantidadPlanes)
+                .collect(Collectors.toList());
     }
 
     public Optional<Planta> plantaMasCercanaConModeloDisponible(ModeloAuto modeloAuto) {
@@ -49,26 +49,26 @@ public class Concesionaria {
         this.planesDeAhorro = planesDeAhorro;
     }
 
-    public void ejecutarAdjudicaciones(){
-        for (PlanDeAhorro plan : planesDeAhorro){
-            ejecutarAdjudicacionYGenerarCupon(plan);
+    public void ejecutarAdjudicaciones() {
+        for (PlanDeAhorro plan : planesDeAhorro) {
+            this.cuponesDeAdjudicacion.add(ejecutarAdjudicacionYGenerarCupon(plan));
         }
     }
 
-    public void ejecutarAdjudicacionYGenerarCupon(PlanDeAhorro plan){
+    public CuponDeAdjudicacion ejecutarAdjudicacionYGenerarCupon(PlanDeAhorro plan) {
         Cliente cliente = ejecutarAdjudicacion(plan);
-        ModeloAuto modeloAuto = cliente.getSolicitudDeAdjudicacion().getPlanDeAhorro().getModeloAuto();
+        ModeloAuto modeloAuto = plan.getModeloAuto();
         Planta plantaMasCercana = plantaMasCercanaConModeloDisponible(modeloAuto).get();
-        CuponDeAdjudicacion cupon = new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana), plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto));
-        this.cuponesDeAdjudicacion.add(cupon);
+        return new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana), plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto), cliente);
+
     }
 
-    public Cliente ejecutarAdjudicacion(PlanDeAhorro plan){
+    public Cliente ejecutarAdjudicacion(PlanDeAhorro plan) {
         return plan.clienteAAdjudicar();
 
     }
 
-    public int cantidadDisponibleDe(ModeloAuto modelo){
+    public int cantidadDisponibleDe(ModeloAuto modelo) {
         return fabrica.stockTotal(modelo);
     }
 }

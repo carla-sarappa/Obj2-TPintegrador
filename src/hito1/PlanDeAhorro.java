@@ -35,10 +35,6 @@ public class PlanDeAhorro {
         return financiamiento;
     }
 
-    public FormaAdjudicacion getFormaAdjudicacion() {
-        return formaAdjudicacion;
-    }
-
     public Double getAlicuota() {
         return financiamiento.montoAPagarEnCuotas(modeloAuto) / cantidadDeCuotas;
     }

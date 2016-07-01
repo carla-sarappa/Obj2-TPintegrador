@@ -21,7 +21,7 @@ public class PagoTest {
 
     @Before
     public void setUp() {
-        modelo = new ModeloAuto();
+        modelo = mock(ModeloAuto.class);
         financiamiento100 = new Financiamiento100();
         formaAdjAlAzar = new FormaAdjudicacionAlAzar();
         planDeAhorro = new PlanDeAhorro(1, modelo, financiamiento100, formaAdjAlAzar, 12);

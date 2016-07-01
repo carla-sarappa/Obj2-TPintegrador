@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class StockTest {
     private Stock stock;
@@ -13,7 +14,7 @@ public class StockTest {
     @Before
     public void setUp() {
         stock = new Stock();
-        modeloAuto = new ModeloAuto();
+        modeloAuto = mock(ModeloAuto.class);
     }
 
     @Test

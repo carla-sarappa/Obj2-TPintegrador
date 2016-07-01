@@ -22,28 +22,8 @@ public class Cliente {
         this.ingresoCliente = ingresoCliente;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public int getDNI() {
-        return DNI;
-    }
-
     public DateTime getfNac() {
         return fNac;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public String getMail() {
-        return mail;
     }
 
     public DateTime getIngresoCliente() {

@@ -20,6 +20,7 @@ public class SolicitudDeAdjudicacionTest {
     private ComprobanteDePago comprobanteDePago2;
     private ComprobanteDePago comprobanteDePago3;
     private SolicitudDeAdjudicacion solicitudDeAdjudicacion;
+    private ModeloAuto modelo;
 
     @Before
     public void setUp(){
@@ -32,6 +33,8 @@ public class SolicitudDeAdjudicacionTest {
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago1);
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago2);
         solicitudDeAdjudicacion.agregarPago(comprobanteDePago3);
+        modelo = mock(ModeloAuto.class);
+        when(modelo.getValorDeVenta()).thenReturn(40.0);
 
     }
 
@@ -45,7 +48,7 @@ public class SolicitudDeAdjudicacionTest {
     @Test
     public void testPorcentajePagado(){
         when(planDeAhorro.getAlicuota()).thenReturn(10.0);
-        when(planDeAhorro.getModeloAuto()).thenReturn(new ModeloAuto(40.0));
+        when(planDeAhorro.getModeloAuto()).thenReturn(modelo);
 
         assertThat(solicitudDeAdjudicacion.porcentajePagado(), equalTo(75.0));
     }
@@ -74,7 +77,7 @@ public class SolicitudDeAdjudicacionTest {
 
     @Test
     public void testGetValorDeVenta(){
-        when(planDeAhorro.getModeloAuto()).thenReturn(new ModeloAuto(40.0));
+        when(planDeAhorro.getModeloAuto()).thenReturn(modelo);
 
         assertThat(solicitudDeAdjudicacion.getValorDeVenta(), equalTo(40.0));
 
