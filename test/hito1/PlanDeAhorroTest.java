@@ -21,21 +21,19 @@ public class PlanDeAhorroTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         financiamiento = mock(Financiamiento.class);
         modeloAuto = mock(ModeloAuto.class);
         formaAdjudicacionPorMayorCobertura = new FormaAdjudicacionPorMayorCobertura();
         planDeAhorroCobertura = new PlanDeAhorro(1, modeloAuto, financiamiento, formaAdjudicacionPorMayorCobertura, 12);
         formaAdjudicacionAlAzar = new FormaAdjudicacionAlAzar();
         planDeAhorroAzar = new PlanDeAhorro(2, modeloAuto, financiamiento, formaAdjudicacionAlAzar, 24);
-        cliente1 = new Cliente("cliente 1", "Sasfrasdk", 3383888, new DateTime("1909-03-03"), "Capital","carldsffffrappa@gmail.com", new DateTime("2014-05-01"));
-        cliente2 = new Cliente("cliente 2", "Sasfrasdk", 3383888, new DateTime("1909-03-03"), "Capital","carldsffffrappa@gmail.com", new DateTime("2014-05-01"));
-
+        cliente1 = new Cliente("cliente 1", "Sasfrasdk", 3383888, new DateTime("1909-03-03"), "Capital", "carldsffffrappa@gmail.com", new DateTime("2014-05-01"));
+        cliente2 = new Cliente("cliente 2", "Sasfrasdk", 3383888, new DateTime("1909-03-03"), "Capital", "carldsffffrappa@gmail.com", new DateTime("2014-05-01"));
     }
 
-
     @Test
-    public void testEjecutaLasAdjudicacionesDeClientesConMayorCobertura(){
+    public void testEjecutaLasAdjudicacionesDeClientesConMayorCobertura() {
         SolicitudDeAdjudicacion solicitudDeAdjudicacion1 = mock(SolicitudDeAdjudicacion.class);
         cliente1.setSolicitudDeAdjudicacion(solicitudDeAdjudicacion1);
         when(solicitudDeAdjudicacion1.porcentajePagado()).thenReturn(90.0);
@@ -51,7 +49,7 @@ public class PlanDeAhorroTest {
     }
 
     @Test
-    public void testEjecutaLasAdjudicacionesDeClientesAlAzar(){
+    public void testEjecutaLasAdjudicacionesDeClientesAlAzar() {
         planDeAhorroAzar.agregarSuscriptor(cliente1);
         planDeAhorroAzar.agregarSuscriptor(cliente2);
         FormaAdjudicacionAlAzar.Azar azar = mock(FormaAdjudicacionAlAzar.Azar.class);
@@ -63,17 +61,15 @@ public class PlanDeAhorroTest {
     }
 
     @Test
-    public void testCantidadDeSuscriptores(){
+    public void testCantidadDeSuscriptores() {
         planDeAhorroAzar.agregarSuscriptor(cliente1);
         planDeAhorroAzar.agregarSuscriptor(cliente2);
 
         assertThat(planDeAhorroAzar.getCantidadDeSuscriptos(), equalTo(2));
     }
 
-
-
     @Test
-    public void testAlicuota(){
+    public void testAlicuota() {
         when(financiamiento.montoAPagarEnCuotas(modeloAuto)).thenReturn(1200.0);
         assertThat(planDeAhorroCobertura.getAlicuota(), equalTo(100.0));
     }
@@ -93,5 +89,9 @@ public class PlanDeAhorroTest {
         assertThat(planDeAhorroCobertura.getFinanciamiento(), equalTo(financiamiento));
     }
 
-
+    @Test
+    public void testMontoAPagarEnElMomentoDeAdjudicacion(){
+        when(financiamiento.montoAPagarEnElMomentoDeAdjudicacion(modeloAuto)).thenReturn(20.0);
+        assertThat(planDeAhorroAzar.montoAPagarEnElMomentoDeAdjudicacion(), equalTo(20.0));
+    }
 }

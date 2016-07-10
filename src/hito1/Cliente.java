@@ -58,8 +58,8 @@ public class Cliente {
         this.solicitudDeAdjudicacion = solicitudDeAdjudicacion;
     }
 
-    public void pagarCuota(){
-        solicitudDeAdjudicacion.agregarPago(new ComprobanteDePago(solicitudDeAdjudicacion, DateTime.now(), ComprobanteDePago.COSTO_GASTOS_ADMINISTRATIVOS, this));
+    public void pagarCuota(Concesionaria concesionaria){
+        solicitudDeAdjudicacion.agregarPago(new ComprobanteDePago(solicitudDeAdjudicacion, DateTime.now(), concesionaria, this));
     }
 }
 

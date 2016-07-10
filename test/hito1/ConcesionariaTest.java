@@ -96,10 +96,47 @@ public class ConcesionariaTest {
         assertThat(concesionaria.cantidadDisponibleDe(modeloAuto),equalTo(6));
     }
 
-    @Test
-    public void testSiNoExistePlantaCercanaConStockDelModeloDeAuto_LanzaUnaExcepcion(){
+    @Test (expected = RuntimeException.class)
+    public void testSiNoExistePlantaCercanaConStockDelModeloDeAutoAlMomentoDeLaAdjudicacion_LanzaUnaExcepcion(){
+        Cliente cliente = mock(Cliente.class);
+        PlanDeAhorro planDeAhorro = mock(PlanDeAhorro.class);
+        when(planDeAhorro.clienteAAdjudicar()).thenReturn(cliente);
+        when(planDeAhorro.getFinanciamiento()).thenReturn(new Financiamiento100());
+        when(planDeAhorro.getModeloAuto()).thenReturn(modeloAuto);
+        fabrica.agregarPlanta(planta);
+        concesionaria.registrarDistancia(planta, 4.0);
+
+        CuponDeAdjudicacion cupon = concesionaria.ejecutarAdjudicacionYGenerarCupon(planDeAhorro);
+
+        assertEquals(cliente, cupon.getCliente());
+        assertThat(cupon.getGastoDeFlete(), equalTo(400.0));
+        assertThat(cupon.getMontoAPagarAlMomentoDeLaAdjudicacion(), equalTo(0.0));
 
     }
 
+    @Test
+    public void testGetGastosAdminstrativos() {
+        concesionaria.setGastosAdminstrativos(20.0);
+        assertThat(concesionaria.getGastosAdminstrativos(), equalTo(20.0));
+    }
 
+    @Test
+    public void testConcesionariaRegistraCuponesDeAdjudicacion(){
+        Cliente cliente = mock(Cliente.class);
+        PlanDeAhorro planDeAhorro = mock(PlanDeAhorro.class);
+        when(planDeAhorro.clienteAAdjudicar()).thenReturn(cliente);
+        when(planDeAhorro.getFinanciamiento()).thenReturn(new Financiamiento100());
+        when(planDeAhorro.getModeloAuto()).thenReturn(modeloAuto);
+        fabrica.agregarPlanta(planta);
+        when(planta.stock(modeloAuto)).thenReturn(10);
+        when(planta.produce(modeloAuto)).thenReturn(true);
+        concesionaria.registrarDistancia(planta, 4.0);
+
+        CuponDeAdjudicacion cupon = concesionaria.ejecutarAdjudicacionYGenerarCupon(planDeAhorro);
+
+        assertEquals(cliente, cupon.getCliente());
+        assertThat(cupon.getGastoDeFlete(), equalTo(400.0));
+        assertThat(cupon.getMontoAPagarAlMomentoDeLaAdjudicacion(), equalTo(0.0));
+
+    }
 }

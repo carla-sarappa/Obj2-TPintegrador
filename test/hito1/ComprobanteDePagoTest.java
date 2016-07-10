@@ -21,13 +21,16 @@ public class ComprobanteDePagoTest {
     private ModeloAuto modelo;
     private Financiamiento100 financiamiento100;
     private FormaAdjudicacionAlAzar formaAdjAlAzar;
+    private Concesionaria concesionaria;
 
 
     @Before
     public void setUp(){
         solicitudDeAdjudicacion = mock(SolicitudDeAdjudicacion.class);
         cliente = mock(Cliente.class);
-        comprobanteDePago = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-29"), 20.0, cliente);
+        concesionaria = mock(Concesionaria.class);
+        when(concesionaria.getGastosAdminstrativos()).thenReturn(20.0);
+        comprobanteDePago = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-29"), concesionaria, cliente);
         modelo = mock(ModeloAuto.class);
         financiamiento100 = new Financiamiento100();
         formaAdjAlAzar = new FormaAdjudicacionAlAzar();
@@ -76,7 +79,7 @@ public class ComprobanteDePagoTest {
         SolicitudDeAdjudicacion solicitudDeAdjudicacion = mock(SolicitudDeAdjudicacion.class);
         when(solicitudDeAdjudicacion.getValorDeVenta()).thenReturn(1000.0);
 
-        ComprobanteDePago comprobante = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-30"), 20.0, cliente);
+        ComprobanteDePago comprobante = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-30"), concesionaria, cliente);
         assertThat(comprobante.getSeguroDeVida(), equalTo(100.0));
     }
 
@@ -88,7 +91,7 @@ public class ComprobanteDePagoTest {
         SolicitudDeAdjudicacion solicitudDeAdjudicacion = mock(SolicitudDeAdjudicacion.class);
         when(solicitudDeAdjudicacion.getValorDeVenta()).thenReturn(1000.0);
 
-        ComprobanteDePago comprobante = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-30"), 20.0, cliente);
+        ComprobanteDePago comprobante = new ComprobanteDePago(solicitudDeAdjudicacion, new DateTime("2016-06-30"), concesionaria, cliente);
         assertThat(comprobante.getSeguroDeVida(), equalTo(110.0));
     }
 

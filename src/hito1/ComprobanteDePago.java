@@ -7,14 +7,14 @@ import org.joda.time.Period;
 public class ComprobanteDePago {
     private SolicitudDeAdjudicacion solicitudDeAdjudicacion;
     private DateTime fecha;
-    private Double gastosAdminstrativos;
+    private Concesionaria concesionaria;
     private Cliente cliente;
     public static final Double COSTO_GASTOS_ADMINISTRATIVOS = 20.0;
 
-    public ComprobanteDePago(SolicitudDeAdjudicacion solicitudDeAdjudicacion, DateTime fecha, Double gastosAdminstrativos, Cliente cliente) {
+    public ComprobanteDePago(SolicitudDeAdjudicacion solicitudDeAdjudicacion, DateTime fecha, Concesionaria concesionaria, Cliente cliente) {
         this.solicitudDeAdjudicacion = solicitudDeAdjudicacion;
         this.fecha = fecha;
-        this.gastosAdminstrativos = gastosAdminstrativos;
+        this.concesionaria = concesionaria;
         this.cliente = cliente;
     }
 
@@ -23,7 +23,7 @@ public class ComprobanteDePago {
     }
 
     public Double getGastosAdminstrativos() {
-        return gastosAdminstrativos;
+        return concesionaria.getGastosAdminstrativos();
     }
 
     public DateTime getFecha() {

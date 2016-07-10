@@ -8,6 +8,7 @@ public class Concesionaria {
     private Map<Planta, Double> distancias = new HashMap<>();
     private List<PlanDeAhorro> planesDeAhorro = new ArrayList<>();
     private List<CuponDeAdjudicacion> cuponesDeAdjudicacion = new ArrayList<>();
+    private Double gastosAdminstrativos;
 
     public Concesionaria(Fabrica fabrica) {
         this.fabrica = fabrica;
@@ -70,5 +71,14 @@ public class Concesionaria {
 
     public int cantidadDisponibleDe(ModeloAuto modelo) {
         return fabrica.stockTotal(modelo);
+    }
+
+
+    public Double getGastosAdminstrativos() {
+        return gastosAdminstrativos;
+    }
+
+    public void setGastosAdminstrativos(Double gastosAdminstrativos) {
+        this.gastosAdminstrativos = gastosAdminstrativos;
     }
 }

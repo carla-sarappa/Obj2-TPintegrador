@@ -14,12 +14,14 @@ public class ClienteTest {
 
     private Cliente cliente;
     private PlanDeAhorro planDeAhorro;
+    private Concesionaria concesionaria;
 
     @Before
     public void setUp() {
         cliente = new Cliente("nombre", "apellido", 3383888, new DateTime("1909-03-03"), "Capital","carla@il.com", new DateTime("2014-05-01"));
         planDeAhorro = mock(PlanDeAhorro.class);
         when(planDeAhorro.getCantidadDeCuotas()).thenReturn(5);
+        concesionaria = mock(Concesionaria.class);
     }
 
     @Test
@@ -27,7 +29,7 @@ public class ClienteTest {
         SolicitudDeAdjudicacion solicitudDeAdjudicacion = spy(new SolicitudDeAdjudicacion(planDeAhorro, DateTime.now()));
         ArgumentCaptor<ComprobanteDePago> comprobanteDePagoArgumentCaptor = ArgumentCaptor.forClass(ComprobanteDePago.class);
         cliente.setSolicitudDeAdjudicacion(solicitudDeAdjudicacion);
-        cliente.pagarCuota();
+        cliente.pagarCuota(concesionaria);
 
         verify(solicitudDeAdjudicacion).agregarPago(comprobanteDePagoArgumentCaptor.capture());
 
