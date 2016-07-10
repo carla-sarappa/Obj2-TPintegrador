@@ -28,7 +28,7 @@ public class Concesionaria {
     public List<PlanDeAhorro> planesConMayorCantidadDeSuscriptos(Integer cantidadPlanes) {
         return planesDeAhorro.stream()
                 .sorted((plan1, plan2) -> { // se compara al reves para que quede de mayor a menor
-                    return (plan2.getSuscriptosPlan().size() - plan1.getSuscriptosPlan().size());
+                    return (plan2.getCantidadDeSuscriptos() - plan1.getCantidadDeSuscriptos());
                 })
                 .limit(cantidadPlanes)
                 .collect(Collectors.toList());
@@ -59,7 +59,8 @@ public class Concesionaria {
         Cliente cliente = ejecutarAdjudicacion(plan);
         ModeloAuto modeloAuto = plan.getModeloAuto();
         Planta plantaMasCercana = plantaMasCercanaConModeloDisponible(modeloAuto).get();
-        return new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana), plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto), cliente);
+        return new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana),
+                plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto), cliente);
 
     }
 

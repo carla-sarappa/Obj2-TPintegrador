@@ -1,6 +1,5 @@
 package hito1;
 
-import fixture.FixturePlanesDeAhorro;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,16 +63,35 @@ public class PlanDeAhorroTest {
     }
 
     @Test
-    public void testAzarRetornaNumero(){
-        FormaAdjudicacionAlAzar.Azar azar = new FormaAdjudicacionAlAzar.Azar();
+    public void testCantidadDeSuscriptores(){
+        planDeAhorroAzar.agregarSuscriptor(cliente1);
+        planDeAhorroAzar.agregarSuscriptor(cliente2);
 
-        assertThat(azar.siguienteNumeroHasta(1), equalTo(0));
+        assertThat(planDeAhorroAzar.getCantidadDeSuscriptos(), equalTo(2));
     }
+
+
 
     @Test
     public void testAlicuota(){
         when(financiamiento.montoAPagarEnCuotas(modeloAuto)).thenReturn(1200.0);
         assertThat(planDeAhorroCobertura.getAlicuota(), equalTo(100.0));
     }
+
+    @Test
+    public void testGetCantidadDeCuotas() {
+        assertThat(planDeAhorroCobertura.getCantidadDeCuotas(), equalTo(12));
+    }
+
+    @Test
+    public void testGetModeloAuto() {
+        assertThat(planDeAhorroCobertura.getModeloAuto(), equalTo(modeloAuto));
+    }
+
+    @Test
+    public void testGetFinanciamiento() {
+        assertThat(planDeAhorroCobertura.getFinanciamiento(), equalTo(financiamiento));
+    }
+
 
 }

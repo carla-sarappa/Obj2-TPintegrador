@@ -23,16 +23,16 @@ public class PlanDeAhorro {
         return cantidadDeCuotas;
     }
 
-    public List<Cliente> getSuscriptosPlan() {
-        return suscriptosPlan;
-    }
-
     public void agregarSuscriptor(Cliente cliente) {
         suscriptosPlan.add(cliente);
     }
 
     public ModeloAuto getModeloAuto() {
         return modeloAuto;
+    }
+
+    public Integer getCantidadDeSuscriptos(){
+        return suscriptosPlan.size();
     }
 
     public Financiamiento getFinanciamiento() {
