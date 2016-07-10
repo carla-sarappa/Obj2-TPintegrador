@@ -47,4 +47,8 @@ public class PlanDeAhorro {
         return formaAdjudicacion.siguienteClienteAAdjudicar(suscriptosPlan).get();
 
     }
+
+    public Double montoAPagarEnElMomentoDeAdjudicacion(){
+        return getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto);
+    }
 }

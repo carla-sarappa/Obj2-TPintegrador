@@ -25,13 +25,13 @@ public class Fabrica {
 
     public int stockTotal(ModeloAuto modelo) {
         return plantas.stream()
-                .mapToInt(planta -> planta.getStock().cantidad(modelo))
+                .mapToInt(planta -> planta.stock(modelo))
                 .sum();
     }
 
     public List<Planta> plantasQueProducenModelo(ModeloAuto modeloAuto){
         return plantas.stream()
-                .filter(planta -> planta.getModelos().contains(modeloAuto))
+                .filter(planta -> planta.produce(modeloAuto))
                 .collect(Collectors.toList());
     }
 

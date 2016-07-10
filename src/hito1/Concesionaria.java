@@ -56,11 +56,10 @@ public class Concesionaria {
     }
 
     public CuponDeAdjudicacion ejecutarAdjudicacionYGenerarCupon(PlanDeAhorro plan) {
-        Cliente cliente = ejecutarAdjudicacion(plan);
-        ModeloAuto modeloAuto = plan.getModeloAuto();
-        Planta plantaMasCercana = plantaMasCercanaConModeloDisponible(modeloAuto).get();
-        return new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana),
-                plan.getFinanciamiento().montoAPagarEnElMomentoDeAdjudicacion(modeloAuto), cliente);
+        Planta plantaMasCercana = plantaMasCercanaConModeloDisponible(plan.getModeloAuto())
+                .orElseThrow(()-> new RuntimeException("No se encontró una planta que tenga este modelo en stock"));
+
+        return new CuponDeAdjudicacion(this.distanciaA(plantaMasCercana), plan, ejecutarAdjudicacion(plan));
 
     }
 

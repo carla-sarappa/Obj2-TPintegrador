@@ -2,13 +2,13 @@ package hito1;
 
 public class CuponDeAdjudicacion {
     private Double distancia;
-    private Double montoAPagarAlMomentoDeLaAdjudicacion;
     private Double precioFletePorKM = 100.0;
+    private PlanDeAhorro planDeAhorro;
     private Cliente cliente;
 
-    public CuponDeAdjudicacion(Double distancia, Double montoAPagarAlMomentoDeLaAdjudicacion, Cliente cliente) {
+    public CuponDeAdjudicacion(Double distancia, PlanDeAhorro planDeAhorro, Cliente cliente) {
         this.distancia = distancia;
-        this.montoAPagarAlMomentoDeLaAdjudicacion = montoAPagarAlMomentoDeLaAdjudicacion;
+        this.planDeAhorro = planDeAhorro;
         this.cliente = cliente;
     }
 
@@ -21,6 +21,7 @@ public class CuponDeAdjudicacion {
     }
 
     public Double getMontoAPagarAlMomentoDeLaAdjudicacion() {
-        return montoAPagarAlMomentoDeLaAdjudicacion;
+
+        return planDeAhorro.montoAPagarEnElMomentoDeAdjudicacion();
     }
 }

@@ -27,9 +27,9 @@ public class ConcesionariaTest {
     public void setUp(){
         fabrica = new Fabrica();
         concesionaria = new Concesionaria(fabrica);
-        planta = new Planta();
-        planta1 = new Planta();
-        planta2 = new Planta();
+        planta = mock(Planta.class);
+        planta1 = mock(Planta.class);
+        planta2 = mock(Planta.class);
         modeloAuto = mock(ModeloAuto.class);
         modelo1 = mock(ModeloAuto.class);
         modelo2 = mock(ModeloAuto.class);
@@ -52,12 +52,15 @@ public class ConcesionariaTest {
         fabrica.agregarPlanta(planta1);
         fabrica.agregarPlanta(planta2);
         fabrica.agregarPlanta(planta);
-        planta1.agregarOAumentarModelo(modelo1, 2);
-        planta2.agregarOAumentarModelo(modelo2, 1);
-        planta.agregarOAumentarModelo(modelo1, 3);
+        when(planta1.stock(modelo1)).thenReturn(2);
+        when(planta2.stock(modelo2)).thenReturn(1);
+        when(planta.stock(modelo1)).thenReturn(3);
         concesionaria.registrarDistancia(planta1, 20.0);
         concesionaria.registrarDistancia(planta2, 10.0);
         concesionaria.registrarDistancia(planta, 30.0);
+        when(planta1.produce(modelo1)).thenReturn(true);
+        when(planta2.produce(modelo2)).thenReturn(true);
+        when(planta.produce(modelo1)).thenReturn(true);
         assertEquals(planta1, concesionaria.plantaMasCercanaConModeloDisponible(modelo1).get());
     }
 
@@ -83,19 +86,20 @@ public class ConcesionariaTest {
 
 
     @Test
-    public void  testConcesionariaAseguraQueSuInformacionLocalDeStockDeModelosCoincideConLosDeLasPlantas(){
-        planta1.agregarOAumentarModelo(modeloAuto, 2);
-        planta2.agregarOAumentarModelo(modeloAuto, 3);
+    public void testConcesionariaAseguraQueSuInformacionLocalDeStockDeModelosCoincideConLosDeLasPlantas(){
         fabrica.agregarPlanta(planta1);
         fabrica.agregarPlanta(planta2);
+        when(planta1.stock(modeloAuto)).thenReturn(2).thenReturn(3);
+        when(planta2.stock(modeloAuto)).thenReturn(3);
 
         assertThat(concesionaria.cantidadDisponibleDe(modeloAuto),equalTo(5));
-
-        planta1.agregarOAumentarModelo(modeloAuto, 1);
-
         assertThat(concesionaria.cantidadDisponibleDe(modeloAuto),equalTo(6));
     }
 
+    @Test
+    public void testSiNoExistePlantaCercanaConStockDelModeloDeAuto_LanzaUnaExcepcion(){
+
+    }
 
 
 }
