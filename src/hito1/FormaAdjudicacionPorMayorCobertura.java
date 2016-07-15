@@ -15,7 +15,7 @@ public class FormaAdjudicacionPorMayorCobertura implements FormaAdjudicacion{
             });
     }
 
-    private static abstract class CompararCliente{
+    public static abstract class CompararCliente{
         private CompararCliente siguienteComparador;
         public abstract int comparar(Cliente cliente1, Cliente cliente2);
         public CompararCliente oPor(CompararCliente compararCliente){
@@ -38,25 +38,23 @@ public class FormaAdjudicacionPorMayorCobertura implements FormaAdjudicacion{
             return diferencia;
         }
     }
-
     public static class CompararPorcentajePagado extends CompararCliente{
-
         public int comparar(Cliente cliente1, Cliente cliente2){
-            return (int) (cliente1.getSolicitudDeAdjudicacion().porcentajePagado() - cliente2.getSolicitudDeAdjudicacion().porcentajePagado());
+            return (int) (cliente1.porcentajePagado() - cliente2.porcentajePagado());
         }
 
     }
 
     public static class CompararFechaIngresoConcesionaria extends CompararCliente{
         public int comparar(Cliente cliente1, Cliente cliente2){
-            return (int) (cliente1.getIngresoCliente().getMillis() - cliente2.getIngresoCliente().getMillis());
+            return (int) (cliente2.getIngresoClienteConcesionaria().getMillis() - cliente1.getIngresoClienteConcesionaria().getMillis());
         }
     }
 
     public static class CompararFechaIngresoPlan extends CompararCliente{
         public int comparar(Cliente cliente1, Cliente cliente2){
-            return (int) (cliente1.getSolicitudDeAdjudicacion().getFechaIngresoPlan().getMillis() -
-                    cliente2.getSolicitudDeAdjudicacion().getFechaIngresoPlan().getMillis());
+            return (int) (cliente2.getSolicitudDeAdjudicacion().getFechaIngresoPlan().getMillis() -
+                    cliente1.getSolicitudDeAdjudicacion().getFechaIngresoPlan().getMillis());
         }
     }
 }

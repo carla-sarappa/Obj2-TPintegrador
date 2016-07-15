@@ -68,7 +68,7 @@ public class ClienteTest {
 
     @Test
     public void testGetIngresoCliente() {
-        assertThat(cliente.getIngresoCliente(), equalTo(new DateTime("2014-05-01")));
+        assertThat(cliente.getIngresoClienteConcesionaria(), equalTo(new DateTime("2014-05-01")));
     }
 
 }

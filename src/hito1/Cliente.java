@@ -9,17 +9,17 @@ public class Cliente {
     private DateTime fNac;
     private String direccion;
     private String mail;
-    private DateTime ingresoCliente;
+    private DateTime ingresoClienteConcesionaria;
     private SolicitudDeAdjudicacion solicitudDeAdjudicacion;
 
-    public Cliente(String nombre, String apellido, int DNI, DateTime fNac, String direccion, String mail, DateTime ingresoCliente) {
+    public Cliente(String nombre, String apellido, int DNI, DateTime fNac, String direccion, String mail, DateTime ingresoClienteConcesionaria) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.DNI = DNI;
         this.fNac = fNac;
         this.direccion = direccion;
         this.mail = mail;
-        this.ingresoCliente = ingresoCliente;
+        this.ingresoClienteConcesionaria = ingresoClienteConcesionaria;
     }
 
     public String getNombre() {
@@ -46,8 +46,8 @@ public class Cliente {
         return fNac;
     }
 
-    public DateTime getIngresoCliente() {
-        return ingresoCliente;
+    public DateTime getIngresoClienteConcesionaria() {
+        return ingresoClienteConcesionaria;
     }
 
     public SolicitudDeAdjudicacion getSolicitudDeAdjudicacion() {
@@ -60,6 +60,10 @@ public class Cliente {
 
     public void pagarCuota(Concesionaria concesionaria){
         solicitudDeAdjudicacion.agregarPago(new ComprobanteDePago(solicitudDeAdjudicacion, DateTime.now(), concesionaria, this));
+    }
+
+    public Double porcentajePagado(){
+        return getSolicitudDeAdjudicacion().porcentajePagado();
     }
 }
 
